@@ -545,7 +545,7 @@ module Bundler
   private
 
     def add_platforms
-      (@dependencies.flat_map(&:expanded_platforms) + current_platforms).uniq.each do |platform|
+      (@dependencies.flat_map(&:expanded_platforms) + current_platforms + [Gem::Platform::RUBY]).uniq.each do |platform|
         add_platform(platform)
       end
     end

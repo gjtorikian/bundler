@@ -178,6 +178,7 @@ RSpec.describe "bundle install from an existing gemspec" do
     system_gems "platform_specific-1.0-java", :path => :bundle_path, :keep_path => true
 
     install_gemfile! <<-G
+      source "#{file_uri_for(gem_repo1)}"
       gemspec :path => '#{tmp.join("foo")}'
     G
 

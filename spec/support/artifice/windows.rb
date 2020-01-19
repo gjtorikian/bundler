@@ -22,7 +22,9 @@ class Windows < Sinatra::Base
 
   files = ["specs.4.8.gz",
            "prerelease_specs.4.8.gz",
+           "quick/Marshal.4.8/rcov-1.0.gemspec.rz",
            "quick/Marshal.4.8/rcov-1.0-mswin32.gemspec.rz",
+           "gems/rcov-1.0.gem",
            "gems/rcov-1.0-mswin32.gem"]
 
   files.each do |file|

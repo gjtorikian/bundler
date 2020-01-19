@@ -222,6 +222,11 @@ module Spec
           s.write "lib/rcov.rb", "RCOV = '1.0.0'"
         end
 
+        build_gem "rcov" do |s|
+          s.platform = "ruby"
+          s.write "lib/rcov.rb", "RCOV = '1.0.0 RUBY'"
+        end
+
         build_gem "net-ssh"
         build_gem "net-sftp", "1.1.1" do |s|
           s.add_dependency "net-ssh", ">= 1.0.0", "< 1.99.0"

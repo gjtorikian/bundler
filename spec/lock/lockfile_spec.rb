@@ -954,7 +954,7 @@ RSpec.describe "the lockfile format" do
     G
   end
 
-  it "keeps existing platforms in the lockfile", :bundler => "< 3" do
+  it "keeps existing platforms in the lockfile" do
     lockfile <<-G
       GEM
         remote: #{file_uri_for(gem_repo1)}/
@@ -985,49 +985,7 @@ RSpec.describe "the lockfile format" do
 
       PLATFORMS
         java
-        #{generic_local_platform}
-
-      DEPENDENCIES
-        rack
-
-      BUNDLED WITH
-         #{Bundler::VERSION}
-    G
-  end
-
-  it "keeps existing platforms in the lockfile", :bundler => "3" do
-    lockfile <<-G
-      GEM
-        remote: #{file_uri_for(gem_repo1)}/
-        specs:
-          rack (1.0.0)
-
-      PLATFORMS
-        java
-
-      DEPENDENCIES
-        rack
-
-      BUNDLED WITH
-         #{Bundler::VERSION}
-    G
-
-    install_gemfile <<-G
-      source "#{file_uri_for(gem_repo1)}/"
-
-      gem "rack"
-    G
-
-    lockfile_should_be <<-G
-      GEM
-        remote: #{file_uri_for(gem_repo1)}/
-        specs:
-          rack (1.0.0)
-
-      PLATFORMS
-        java
-        #{generic_local_platform}
-        #{specific_local_platform}
+        #{lockfile_platforms}
 
       DEPENDENCIES
         rack
@@ -1055,10 +1013,12 @@ RSpec.describe "the lockfile format" do
       GEM
         remote: #{file_uri_for(gem_repo2)}/
         specs:
+          platform_specific (1.0)
           platform_specific (1.0-java)
 
       PLATFORMS
         java
+        ruby
 
       DEPENDENCIES
         platform_specific
@@ -1086,11 +1046,13 @@ RSpec.describe "the lockfile format" do
       GEM
         remote: #{file_uri_for(gem_repo2)}/
         specs:
+          platform_specific (1.0)
           platform_specific (1.0-java)
           platform_specific (1.0-universal-java-16)
 
       PLATFORMS
         java
+        ruby
         universal-java-16
 
       DEPENDENCIES

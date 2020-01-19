@@ -97,10 +97,10 @@ module Spec
 
     def local_platforms
       if Bundler.feature_flag.specific_platform?
-        [local, specific_local_platform]
+        [rb, local, specific_local_platform]
       else
-        [local]
-      end
+        [rb, local]
+      end.uniq
     end
   end
 end

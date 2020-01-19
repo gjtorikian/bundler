@@ -110,6 +110,9 @@ RSpec.describe "bundle install across platforms" do
           empyrean (0.1.0)
           ffi (1.9.23-java)
           method_source (0.9.0)
+          pry (0.11.3)
+            coderay (~> 1.1.0)
+            method_source (~> 0.9.0)
           pry (0.11.3-java)
             coderay (~> 1.1.0)
             method_source (~> 0.9.0)
@@ -119,6 +122,7 @@ RSpec.describe "bundle install across platforms" do
 
       PLATFORMS
         java
+        ruby
 
       DEPENDENCIES
         empyrean (= 0.1.0)
@@ -378,39 +382,41 @@ RSpec.describe "bundle install with platform conditionals" do
     expect(out).not_to match(/Could not find gem 'some_gem/)
   end
 
-  it "resolves all platforms by default and without warning messages" do
-    simulate_platform "ruby"
-    simulate_ruby_engine "ruby"
+  %w[ruby jruby].each do |platform|
+    it "resolves all platforms by default and without warning messages under #{platform}" do
+      simulate_platform platform
+      simulate_ruby_engine platform
 
-    gemfile <<-G
-      source "#{file_uri_for(gem_repo1)}"
+      gemfile <<-G
+        source "#{file_uri_for(gem_repo1)}"
 
-      gem "rack", :platform => [:mingw, :mswin, :x64_mingw, :jruby]
-    G
+        gem "rack", :platform => [:mingw, :mswin, :x64_mingw, :jruby]
+      G
 
-    bundle! "install"
+      bundle! "install"
 
-    expect(err).to be_empty
+      expect(err).to be_empty
 
-    lockfile_should_be <<-L
-      GEM
-        remote: #{file_uri_for(gem_repo1)}/
-        specs:
-          rack (1.0.0)
+      lockfile_should_be <<-L
+        GEM
+          remote: #{file_uri_for(gem_repo1)}/
+          specs:
+            rack (1.0.0)
 
-      PLATFORMS
-        java
-        ruby
-        x64-mingw32
-        x86-mingw32
-        x86-mswin32
+        PLATFORMS
+          java
+          ruby
+          x64-mingw32
+          x86-mingw32
+          x86-mswin32
 
-      DEPENDENCIES
-        rack
+        DEPENDENCIES
+          rack
 
-      BUNDLED WITH
-         #{Bundler::VERSION}
-    L
+        BUNDLED WITH
+           #{Bundler::VERSION}
+      L
+    end
   end
 end
 

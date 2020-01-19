@@ -294,15 +294,18 @@ RSpec.describe "bundle lock" do
       GEM
         remote: #{file_uri_for(gem_repo4)}/
         specs:
+          ffi (1.9.14)
           ffi (1.9.14-x86-mingw32)
           gssapi (1.2.0)
             ffi (>= 1.0.1)
+          mixlib-shellout (2.2.6)
           mixlib-shellout (2.2.6-universal-mingw32)
             win32-process (~> 0.8.2)
           win32-process (0.8.3)
             ffi (>= 1.0.0)
 
       PLATFORMS
+        ruby
         x86-mingw32
 
       DEPENDENCIES
