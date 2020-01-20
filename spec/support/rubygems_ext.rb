@@ -7,7 +7,6 @@ module Spec
     DEV_DEPS = {
       "automatiek" => "~> 0.3.0",
       "parallel_tests" => "~> 2.29",
-      "rake" => "~> 12.0",
       "ronn" => "~> 0.7.3",
       "rspec" => "~> 3.8",
       "rubocop" => "= 0.77.0",
@@ -101,7 +100,7 @@ module Spec
     end
 
     def gem_activate(gem_name)
-      gem_requirement = DEV_DEPS[gem_name]
+      gem_requirement = DEV_DEPS[gem_name] || ">= 0.a"
       gem gem_name, gem_requirement
     end
 
